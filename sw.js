@@ -1,0 +1,5 @@
+const CACHE_NAME='abu-laila-v15-white-password-safe';
+const FILES=['./','login.html','index.html','dashboard.html','sales.html','inventory.html','customers.html','debts.html','finance.html','accounts.html','account-ledger.html','settings.html','employees.html','suppliers.html','manufacturing.html','analytics.html','notifications.html','invoice-print.html','manifest.json','icon-192.png','icon-512.png'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(FILES)).catch(()=>{}));});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{let c=r.clone();caches.open(CACHE_NAME).then(cache=>cache.put(e.request,c)).catch(()=>{});return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('login.html'))));});

@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "artifacts": {
+      "$appId": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}
